@@ -8,3 +8,7 @@ class Card:
     # string representation
     def __repr__(self):
         return f"{self.rank} of {self.suit}"
+    
+    def faceup(binary):
+        return binary
+    
