@@ -12,14 +12,13 @@ class Game:
         for i in range(4):
             for t in self.tableaus:
                 t.cards.append(self.deck.deal_one())
-                t.cards[i].faceup(False) # make facedown
+                t.cards[i].flip() # make facedown
 
         for i in range(4):
             self.tableaus[i].cards.append(self.deck.deal_one())
-            self.tableaus[i].cards[i].faceup(False) # make facedown
+            self.tableaus[i].cards[i].flip() # make facedown
 
         for t in self.tableaus:
             t.cards.append(self.deck.deal_one()) 
-            t.cards[-1].faceup(True) # make faceup
-
+            
         self.stock = self.deck
