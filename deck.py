@@ -1,4 +1,4 @@
-from spiderSolitaire.card import Card
+from card import Card
 import random
 
 

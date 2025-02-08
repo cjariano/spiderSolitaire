@@ -1,24 +1,40 @@
-from spiderSolitaire.card import Card
-from spiderSolitaire.deck import Deck
-from spiderSolitaire.tableau import Tableau
+from card import Card
+from deck import Deck
+from tableau import Tableau
 
 class Game:
     def __init__(self):
         self.deck = Deck()
         self.tableaus = [Tableau() for i in range(10)]
-        self.stock = [Card()]
+        self.stock = []
     
+
     def deal(self):
-        for i in range(4):
-            for t in self.tableaus:
-                t.cards.append(self.deck.deal_one())
-                t.cards[i].flip() # make facedown
+        self.deck.shuffle()
+        #deal 4 face down cards to each of 10 tableaus
+        for _ in range(4):
+            for tableau in self.tableaus:
+                card = self.deck.deal_one()
+                card.flip()
+                tableau.cards.append(card)
 
+        #deal a face down card to the first 4 tableaus
         for i in range(4):
-            self.tableaus[i].cards.append(self.deck.deal_one())
-            self.tableaus[i].cards[i].flip() # make facedown
+            card = self.deck.deal_one()
+            card.flip()
+            self.tableaus[i].cards.append(card)
+        
+        #deal 1 face up card to each of 10 tableaus
+        for tableau in self.tableaus:
+            card = self.deck.deal_one()
+            tableau.cards.append(card)
 
-        for t in self.tableaus:
-            t.cards.append(self.deck.deal_one()) 
-            
-        self.stock = self.deck
+        self.stock = self.deck.cards
+    
+    def show_game(self):
+        for tableau in self.tableaus:
+            for card in tableau.cards:
+                print(card)
+            print()  # Prints a blank line to separate tableaus
+
+        print(len(self.stock))
