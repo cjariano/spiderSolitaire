@@ -36,5 +36,12 @@ class Game:
             for card in tableau.cards:
                 print(card)
             print()  # Prints a blank line to separate tableaus
+    
+    def deal_stock(self):
+        for tableau in self.tableaus:
+            card = self.stock.pop()
+            tableau.cards.append(card)
 
-        print(len(self.stock))
+    def move_card(self, int1, int2):
+        card = self.tableaus[int1-1].tableau.cards.pop()
+        self.tableaus[int2-1].tableau.append(card)
