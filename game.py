@@ -1,47 +1,49 @@
 from card import Card
 from deck import Deck
-from tableau import Tableau
+from column import Column
 
 class Game:
     def __init__(self):
         self.deck = Deck()
-        self.tableaus = [Tableau() for i in range(10)]
+        self.columns = [Column() for i in range(10)]
         self.stock = []
     
 
     def deal(self):
         self.deck.shuffle()
-        #deal 4 face down cards to each of 10 tableaus
+        #deal 4 face down cards to each of 10 columns
         for _ in range(4):
-            for tableau in self.tableaus:
+            for column in self.columns:
                 card = self.deck.deal_one()
                 card.flip()
-                tableau.cards.append(card)
+                column.cards.append(card)
 
-        #deal a face down card to the first 4 tableaus
+        #deal a face down card to the first 4 columns
         for i in range(4):
             card = self.deck.deal_one()
             card.flip()
-            self.tableaus[i].cards.append(card)
+            self.columns[i].cards.append(card)
         
-        #deal 1 face up card to each of 10 tableaus
-        for tableau in self.tableaus:
+        #deal 1 face up card to each of 10 columns
+        for column in self.columns:
             card = self.deck.deal_one()
-            tableau.cards.append(card)
+            column.cards.append(card)
 
         self.stock = self.deck.cards
     
     def show_game(self):
-        for tableau in self.tableaus:
-            for card in tableau.cards:
+        for column in self.columns:
+            for card in column.cards:
                 print(card)
-            print()  # Prints a blank line to separate tableaus
+            print()  # Prints a blank line to separate columns
     
     def deal_stock(self):
-        for tableau in self.tableaus:
+        for column in self.columns:
             card = self.stock.pop()
-            tableau.cards.append(card)
+            column.cards.append(card)
 
-    def move_card(self, int1, int2):
-        card = self.tableaus[int1-1].tableau.cards.pop()
-        self.tableaus[int2-1].tableau.append(card)
+    def move_card(self, from_col, to_col):
+        card = self.columns[int(from_col)].cards.pop()
+        self.columns[int(to_col)].cards.append(card)
+        if len((self.columns[int(from_col)])) > 0:
+            self.columns[int(from_col)].cards[-1].flip()
