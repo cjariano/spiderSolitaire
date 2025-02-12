@@ -1,4 +1,4 @@
-from card import Card
+#from card import Card
 from deck import Deck
 from column import Column
 
@@ -43,7 +43,18 @@ class Game:
             column.cards.append(card)
 
     def move_card(self, from_col, to_col):
-        card = self.columns[int(from_col)].cards.pop()
-        self.columns[int(to_col)].cards.append(card)
-        if len((self.columns[int(from_col)])) > 0:
-            self.columns[int(from_col)].cards[-1].flip()
+        # check if indices are within range
+        if not (1 <= from_col <= len(self.columns)) or not (1 <= to_col <= len(self.columns)):
+            print("Error: Column index out of range.")
+            return
+        
+        # check if source column has cards
+        if not self.columns[int(from_col-1)]:
+            print("Error: Source column is empty.")
+            return
+        
+        card = self.columns[int(from_col-1)].cards.pop()
+        self.columns[int(to_col-1)].cards.append(card)
+
+        if (not self.columns[int(from_col-1)].cards[-1].is_face_up and self.columns[int(from_col-1)].cards):
+            self.columns[int(from_col-1)].cards[-1].flip()
